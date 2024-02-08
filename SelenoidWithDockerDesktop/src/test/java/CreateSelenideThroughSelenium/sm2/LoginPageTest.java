@@ -5,6 +5,9 @@ import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import sm2.LoginPage;
+import sm2.ProfilePage;
+import sm2.RemakeNamePage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
@@ -43,10 +46,20 @@ public class LoginPageTest extends AbstractTest {
         RemakeNamePage remakeNamePage = Selenide.page(RemakeNamePage.class);
         remakeNamePage.openFirstDummyCardAndSaveNewName("New Dummy2");
         remakeNamePage.openProfile();
-        SelenideElement  searchElement = $("tbody tr td");
+        SelenideElement searchElement = $("tbody tr td");
         Assertions.assertEquals("97452", searchElement.getText());
     }
 
-
+    @Test
+    @DisplayName("Add picture to ProfilePage")
+    void testAddPictureInProfilePage() {
+        LoginPage loginPage = Selenide.page(LoginPage.class);
+        loginPage.loginInSystem(getLogin(), getPassword());
+        ProfilePage profilePage = Selenide.page(ProfilePage.class);
+        profilePage.openProfilePage();
+        profilePage.clickEditButtonInProfilePage("src/test/java/resources/cats.jpg");
+        //System.out.println(profilePage.getFileName());
+        Selenide.sleep(10000L);
+    }
 
 }
